@@ -1,0 +1,180 @@
+set nocompatible
+filetype off
+"===========================================================
+" Vundle settings
+"===========================================================
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+
+" --------------- Common ---------------
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'mattn/emmet-vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-surround'
+
+" --------------- Python ---------------
+Plugin 'davidhalter/jedi-vim'
+
+" ------------- JavaScript -------------
+Plugin 'pangloss/vim-javascript'
+
+call vundle#end()
+"===========================================================
+filetype on
+filetype plugin on
+filetype plugin indent on
+
+"===========================================================
+" Plugin settings
+"===========================================================
+"-----------------------------------------------------------
+" Jedi-vim settings
+"-----------------------------------------------------------
+let g:jedi#popup_select_first = 0
+let g:jedi#show_call_signatures = 1
+
+"-----------------------------------------------------------
+" Solarized settings
+"-----------------------------------------------------------
+let g:solarized_termcolors=256
+set background=light
+colorscheme solarized
+
+"-----------------------------------------------------------
+" EasyMotion Settings
+"-----------------------------------------------------------
+" Move to char
+map <Leader>f <Plug>(easymotion-bd-f)
+nmap <Leader>f <Plug>(easymotion-overwin-f)
+
+" Move to line
+map <Leader>L <Plug>(easymotion-bd-jk)
+nmap <Leader>L <Plug>(easymotion-overwin-line)
+
+" Move to word
+map <Leader>w <Plug>(easymotion-bd-w)
+nmap <Leader>w <Plug>(easymotion-overwin-w)
+
+"===========================================================
+" General settings
+"===========================================================
+" Включение визуального сигнала об ошибках
+set visualbell
+
+" Включает поддержку русской клавиатуры 
+set keymap=russian-jcukenwin
+set iminsert=0
+set imsearch=0
+
+" Включает дополнительные клавиши вправо-влево и пр.
+set whichwrap=b,s,<,>,[,],l,h
+
+" Список предпочитаемых кодировок при открытии файла
+set fileencodings=utf-8,cp1251,cp866,koi8-r
+
+" Подключает доступ к системному буферу обмена
+set clipboard=unnamedplus,unnamed
+
+" Включает поддержку мышки
+set mouse=a
+
+" Включает отображение вводимой команды
+set showcmd
+
+" Включает отображение статусной строки для каждого окна
+set laststatus=2
+
+" Включает отображение дополнительной информации в статусной строке
+set statusline=%<%f%h%m%r%=format=%{&fileformat}\ file=%{&fileencoding}\ enc=%{&encoding}\ %l,%v\ %P
+
+" Восстанавливает позицию курсора при открытии файла
+if has("autocmd")
+    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+" Включает нумерацию строк
+set number
+" Включает отображение позиции курсора
+set ruler
+
+" Настройка табуляции
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+
+" Включает режим копирования отступа с предыдущей строки
+set autoindent
+
+" Включает автоматическую расстановку отступов
+set smartindent
+
+" Включает перенос строк
+set wrap
+
+" Включает перенос строк по словам
+set linebreak
+
+" Включает подсветку синтаксиса
+syntax enable
+
+"===========================================================
+" Search settings
+"===========================================================
+" Включает подсветку выражения
+set hlsearch
+
+" В процессе набора переходить к искомой подстроке
+set incsearch
+
+" Останавливать поиск при достижении конца файла
+set nowrapscan
+
+" Игнорировать регистр букв при поиске
+set ignorecase
+
+"===========================================================
+" Folding settings
+"===========================================================
+" Включает сворачивание блоков кода
+set foldenable
+
+" Определяет метод для автоматического сворачивания блоков 
+set foldmethod=indent
+
+"===========================================================
+" Highlight characters past column 80
+"===========================================================
+augroup vimrc_autocmds
+    autocmd!
+    autocmd FileType ruby,python,javascript set colorcolumn=80
+    autocmd FileType ruby,python,javascript highlight ColorColumn ctermbg=Red guibg=#c12a0f
+    autocmd FileType ruby,python,javascript set nowrap
+augroup END
+
+"===========================================================
+" Spell checking
+"===========================================================
+set wildmenu
+set wcm=<Tab>
+menu SetSpell.ru  :set spl=ru spell<CR>
+menu SetSpell.en  :set spl=en spell<CR>
+menu SetSpell.off :set nospell<CR>
+map <F7> :emenu SetSpell.<Tab>
+" выбор альтернатив:
+imap <F8> <Esc> z=<CR>i
+map <F8> z=<CR>
+
+"===========================================================
+" Keybindings
+"===========================================================
+map j gj
+map k gk
+map <F3> :noh<CR>
+map <F12> :NERDTree<CR>
+nnoremap <space> zA
+nnoremap <leader>R :!"%:p"<CR>
