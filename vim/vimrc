@@ -185,3 +185,5 @@ map <F3> :noh<CR>
 map <F12> :NERDTree<CR>
 nnoremap <space> zA
 nnoremap <leader>R :!"%:p"<CR>
+inoremap <C-l> <C-^>
+
